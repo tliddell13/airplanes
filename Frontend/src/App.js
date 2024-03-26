@@ -1,18 +1,19 @@
 // Filename: App.js
 
 import React from "react";
-import "./App.css";
 import Header from './components/header/header';
-import Home from "./pages/home/home"; // Importing Home component
+import Main from './pages/info/main';
+import Home from './pages/home/home';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      {/* Render the Home component */}
-      <Header />
-      <Home />
-    </div>
+    <Router>
+     <div className="App">
+       <Home />
+      </div>
+    </Router>
   );
 }
 

@@ -1,0 +1,36 @@
+.side-panel {
+    margin-top: 40px;
+    margin-left: 30px;
+    position: fixed;
+    width: 300px; /* Adjust the width as needed */
+    height: 70%;
+    overflow: visible;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 0 50px -25px black;
+    background-color: white;
+    z-index: 2; /* Ensure the panel is above the map */
+}
+
+.side-panel h2 {
+    margin: 0;
+    padding: 10px;
+    border-radius: 15px 15px 0 0;
+}
+
+.side-panel-content {
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.5em;
+}

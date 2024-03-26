@@ -1,23 +1,58 @@
 // Filename: Header.js
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import './header.css';
 
-const Header = () => {
+const Header = ({setSelectedFlight, flightData, setSidePanelOpen}) => {
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearchInput(inputValue);
+    // Simulate search results based on flightData or any other data source
+    const filteredResults = flightData.filter((flight) =>
+      flight.callsign.toLowerCase().includes(inputValue.toLowerCase())
+    );
+    setSearchResults(filteredResults);
+  };
+
+  const handleDropdownSelect = (flight) => {
+    setSelectedFlight(flight);
+    setSidePanelOpen(true);
+    setSearchInput(flight.callsign); // Update search input with selected flight name
+    setShowDropdown(false); // Hide dropdown after selection
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container-fluid">
-        {/* Brand */}
-        <p className="navbar-brand" to="/">Flight Tracker</p>
-        
-        {/* Search form */}
-        <form className="d-flex mx-auto">
-          <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-          <button className="btn btn-outline-light" type="submit">Search</button>
-        </form>
-        
-        {/* Info button */}
-        <p className="btn btn-outline-light" to="/"><i className="bi bi-info-circle"></i></p>
-      </div>
+    <nav className="header">
+      <ul className='content'>
+        <li className="header-item"><Link className="title" to=" ">Flight Tracker</Link></li>
+        <div className="searchContainer">
+          <li className="header-item"><input
+            type="text"
+            placeholder="Find flight..."
+            onChange={handleSearch}
+            value={searchInput}
+            className="searchInput"
+            onFocus={() => setShowDropdown(true)} // Show dropdown when input is focused
+            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+          />
+          {showDropdown && (
+              <ul className="dropdown">
+                {searchResults.map((flight) => (
+                  <li key={flight.callsign} onClick={() => handleDropdownSelect(flight)}>
+                    {flight.callsign}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        </div>
+        <li className="header-item"><Link className="about" to=" ">about</Link></li>
+      </ul>
     </nav>
   );
 };
