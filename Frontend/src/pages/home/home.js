@@ -219,7 +219,7 @@ const Home = () => {
     const [flightData, setFlightData] = useState([mock_flight_data[0], mock_flight_data[1]]);
 
     
-    
+    /*
     useEffect(() => {
         const fetchFlights = () => {
             getFlights().then((data) => {
@@ -230,6 +230,12 @@ const Home = () => {
         // Update flights every 6 seconds
         const intervalId = setInterval(fetchFlights, 6000);
         return () => clearInterval(intervalId);
+    }, []);
+    */
+
+    // Set the flight data to the mock data
+    useEffect(() => {
+        setFlightData(mock_flight_data);
     }, []);
 
     //Set the data on an interval
