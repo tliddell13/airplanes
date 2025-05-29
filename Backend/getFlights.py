@@ -3,10 +3,11 @@ import pandas as pd
 import opensky_api
 
 app = Flask(__name__)
-
+OPENSKY_USERNAME = "tliddell13-api-client"
+OPENSKY_PASSWORD = "cWbDrvfeSlpQBZzNuWMU1HasXHyUm57R"
 @app.route('/flights', methods=['GET'])
 def get_flights():
-    api = opensky_api.OpenSkyApi(username=OPENSKY_USERNAME, password=OPENSKY_PASSWORD)
+    api = opensky_api.OpenSkyApi(username=None, password=None)
     activeFlights = api.get_states()
     activeFlights_dict = [flight.__dict__ for flight in activeFlights.states]
     df = pd.DataFrame(activeFlights_dict)

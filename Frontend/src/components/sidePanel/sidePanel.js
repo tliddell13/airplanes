@@ -1,9 +1,24 @@
 // side panel for flight info
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./sidePanel.css";
+import getFlightDes from "../../api/getFlightDes";
 
 const SidePanel = ({onClose, selectedFlight}) => {
+
+    const [flightDetails, setFlightDetails] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (selectedFlight && selectedFlight.icao24) {
+            setLoading(true);
+            getFlightDes(selectedFlight.icao24).then((data) => {
+              setFlightDetails(data);
+              setLoading(false);
+            });
+          }
+        }, [selectedFlight]);
+    
     return (
         <div className="side-panel">
             <div className="side-panel-content">
@@ -16,6 +31,13 @@ const SidePanel = ({onClose, selectedFlight}) => {
                     <p>True Track: {selectedFlight.true_track}°</p>
                     <p>Latitude: {selectedFlight.latitude}</p>
                     <p>Longitude: {selectedFlight.longitude}</p>
+                    {flightDetails && !flightDetails.error && (
+                        <>
+                            <hr />
+                            <p><strong>Estimated Departure:</strong> {flightDetails.estDepartureAirport || "Unknown"}</p>
+                            <p><strong>Estimated Arrival:</strong> {flightDetails.estArrivalAirport || "Unknown"}</p>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
