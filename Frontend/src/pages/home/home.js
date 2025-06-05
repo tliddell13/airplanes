@@ -25,8 +25,8 @@ const Home = () => {
             });
         };
         fetchFlights();
-        // Update flights every 6 seconds
-        const intervalId = setInterval(fetchFlights, 6000);
+        // Update flights every 10 seconds
+        const intervalId = setInterval(fetchFlights, 10000);
         return () => clearInterval(intervalId);
     }, []);
     

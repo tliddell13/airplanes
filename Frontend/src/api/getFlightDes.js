@@ -7,7 +7,7 @@
  */
 const getFlightDes = async (icao24) => {
   try {
-    const response = await fetch("/track_flight/${icao24}");
+    const response = await fetch(`/track_flight/${icao24}`);
 
     if (!response.ok) {
       const errorData = await response.json();

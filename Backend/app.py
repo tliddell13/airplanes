@@ -18,7 +18,9 @@ def track_flight(icao24):
     api = opensky_api.OpenSkyApi(username=OPENSKY_USERNAME, password=OPENSKY_PASSWORD)
     now = int(time.time())
     six_hours_ago = now - 6 * 3600
-    flights = api.get_flights_by_aircraft(icao24=icao24, begin=six_hours_ago, end=now)
+    # change ICA024 to lower case to match OpenSky API requirements
+    icao24 = icao24.lower()
+    flights = api.get_flights_by_aircraft(icao24, six_hours_ago, now)
 
     if not flights:
         return jsonify({"error": "No flight data found for the given ICAO24 code"}), 404
@@ -46,7 +48,7 @@ def get_flights():
     df = df.fillna('N/A')
     df = df[df['longitude'].apply(lambda x: isinstance(x, (int, float)))]
     df = df[df['latitude'].apply(lambda x: isinstance(x, (int, float)))]
-    df = df.head(10)
+    df = df.head(15)
 
     return jsonify(df.to_dict(orient='records'))
 
